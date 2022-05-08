@@ -41,11 +41,23 @@ def index():
                     ques = Questions.query.all()
                 except:
                     return render_template("index.html")
+        
+        ques = Questions.query.all()
+        k = - questions_number
+        for u in ques:
+            k += 1
+            print(str(u.id) + " " + u.questions_text)
+        if(k == 0):
+            return "Это 1й элемент в базе данных"
+        elif(k <= questions_number+1):
+            index = 0
+        elif(k > questions_number+1):
+            index = questions_number+1
         answer = {
-            "id": Questions.query.all()[-questions_number-1].id,
-            "questions_text": Questions.query.all()[-questions_number-1].questions_text,
-            "answer_text": Questions.query.all()[-questions_number-1].answer_text,
-            "date": Questions.query.all()[-questions_number-1].date
+            "id": Questions.query.all()[-index].id,
+            "questions_text": Questions.query.all()[-index].questions_text,
+            "answer_text": Questions.query.all()[-index].answer_text,
+            "date": Questions.query.all()[-index].date
         }
         return answer
     else:
